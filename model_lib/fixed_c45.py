@@ -2,6 +2,7 @@ import math
 import pandas as pd
 import numpy as np
 
+
 class _DecisionNode:
     def __init__(self, attribute):
         self.attribute = attribute
@@ -34,19 +35,23 @@ class _DecisionNode:
                     count += 1
             return count
 
+
 class _LeafNode:
     def __init__(self, label, weight):
         self.label = label
         self.weight = weight
 
+
 class C45Classifier:
-    def __init__(self, max_depth=None):
+    def __init__(self, max_depth=None, min_samples_split=2, min_samples_leaf=1):
         self.tree = None
         self.attributes = None
         self.data = None
         self.weight = 1
         self.max_depth = max_depth
         self.deep = 0
+        self.min_samples_split = min_samples_split
+        self.min_samples_leaf = min_samples_leaf
 
     def __calculate_entropy(self, data, weights):
         class_counts = {}
@@ -319,7 +324,7 @@ class C45Classifier:
                 true_pred += 1
         return true_pred / len(y_test)
 
-    def get_params(self, deep=True):
+    def get_params(self):
         return {'max_depth': self.max_depth}
 
     def set_params(self, **params):
